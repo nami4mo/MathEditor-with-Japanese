@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="./libs/mathquill/mathquill.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./libs/mathquill/mathquill.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<p>Type math here: <span id="math-field"></span></p>
+<p>LaTeX of what you typed: <span id="latex"></span></p>
+
+<script>
+var mathFieldSpan = document.getElementById('math-field');
+var latexSpan = document.getElementById('latex');
+
+var MQ = MathQuill.getInterface(2); // for backcompat
+var mathField = MQ.MathField(mathFieldSpan, {
+  spaceBehavesLikeTab: true, // configurable
+  handlers: {
+    edit: function() { // useful event handlers
+      latexSpan.textContent = mathField.latex(); // simple API
+      $('#mathmath').text("$$"+ mathField.latex() +"$$");
+      //MathJaxの再読み込み
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+  }
+});
+</script>
+
+<h1>MathJax のデモでーす。</h1>
+2次方程式<span> \(ax^2 + bx + c = 0\) </span>の解の公式は
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}$$
+でーす。
+<span id="mathmath">$$x = \frac{1}{2}$$</span>

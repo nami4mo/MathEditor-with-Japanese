@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="./libs/mathquill/mathquill.css"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="./libs/mathquill/mathquill.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<div id="result-text-div">
+  <div>入力結果</div>
+  <div id="result-text">
+    <span>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
+  </div>
+  <div>
+    <button id="result-show-btn">確認</button>
+  </div>
+</div>
+
+<div id="input-area" class="clearfix">
+
+  <div id="input-textarea-div">
+    <div>テキスト入力</div>
+    <textarea id="input-textarea"></textarea>
+  </div>
+  <div id="input-math-div">
+    <div>数式入力</div>
+    <div id="mathquills-area"></div>
+    <div><button id="add-mathquill-btn">数式追加</button></div>
+  </div>
+
+</div>
+
+
+<p>Type math here: <span id="math-field"></span></p>
+<p>LaTeX of what you typed: <span id="latex"></span></p>
+
+<script>
+var cnt = 0;
+var mathFields = [];
+// 配列の最初が0じゃなくて1になるようにしておく
+mathFields.push("NoneMathField");
+$('#add-mathquill-btn').on('click',function(){
+  cnt++;
+  var div_id = 'mathquill-div-' + cnt;
+  var span_id = 'mathquill-span-' + cnt;
+  
+  $('<div></div>')
+  .append('#' + cnt +'# : ')
+  .attr('id', div_id)
+  .appendTo('#mathquills-area');
+
+  $('<span></span>')
+  .attr('id', span_id)
+  .appendTo('#' + div_id);
+  
+  var MQ = MathQuill.getInterface(2);
+  var mathFieldSpan = document.getElementById(span_id);
+  var mathField = MQ.MathField(mathFieldSpan, {
+    spaceBehavesLikeTab: true, // configurable
+    handlers: {
+      edit: function() { // useful event handlers
+        // latexSpan.textContent = mathField.latex(); // simple API
+        //$('#mathmath').text("$$"+ mathField.latex() +"$$");
+        // //MathJaxの再読み込み
+        //MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+        // console.log(mathField.latex());
+      }
+    }
+  });
+  mathFields.push(mathField);
+});
+
+// TODO:毎回変わるときもいからなんとかする
+// $('#input-textarea').on('keyup',function(){
+//   $('#result-text').text( $(this).val() );
+//   MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+// });
+
+$('#result-show-btn').on('click',function(){
+  var input_text = $('#input-textarea').val();
+  var input_text_split = input_text.split("#");
+  var sum_text = "";
+  console.log(input_text_split);
+  console.log(mathFields);
+  for( var i = 0 ; i < input_text_split.length ; i++ ){
+    if( i%2 == 0 ){
+      sum_text += input_text_split[i];
+    }
+    else{
+      // TODO:ここでエラーチェック
+      var tmp_math = mathFields[ Number(input_text_split[i]) ];
+      console.log(tmp_math);
+      sum_text += ('$$' + tmp_math.latex() + '$$');
+    }
+  }
+  $('#result-text').text(sum_text);
+  MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+});
+
+</script>

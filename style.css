@@ -1,0 +1,28 @@
+#input-textarea-div{
+    float: left;
+    width: 300px;
+    height: 200px;
+}
+
+#input-mathquill-div{
+    float: left;
+    width: 300px;
+    height: 200px;
+}
+
+.mq-root-block{
+  min-width: 100px;
+  /*min-height: 30px;*/
+}
+
+.clearfix:after {
+    content:"";
+    display:block;
+    clear:both;
+}
+
+#result-text{
+    width: 300px;
+    height: 300px;
+    word-break: break-all;
+}
