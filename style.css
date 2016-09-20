@@ -15,6 +15,11 @@
   height: 250px;
 }
 
+#input-textarea:focus{
+  box-shadow: 0 0 7px #1abc9c;
+  border: 1px solid #1abc9c;
+}
+
 #input-mathquill-div{
     float: left;
     width: 300px;
