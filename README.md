@@ -1,4 +1,4 @@
 # MathEditor-with-Japanese
-Mathquillで日本語を入力できるようにしたエディタ。
+enable to input Japanese with MathQuill
 
 ![after](demo.png "after")
